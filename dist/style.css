@@ -1,0 +1,16 @@
+body {
+    font-family: Georgia, "Nimbus Roman No9 L", "Century Schoolbook L", serif;
+    font-size: 20px;
+    background-color: rgb(89, 173, 206);
+  }
+
+h1 {
+    color: rgb(26, 57, 145);
+    font-size: 56px;
+    font-style: italic;
+    text-shadow: 0 0 5px white, 0 0 5px whitesmoke;
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+  }
