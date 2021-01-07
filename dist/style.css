@@ -6,11 +6,25 @@ body {
 
 h1 {
     color: rgb(26, 57, 145);
-    font-size: 56px;
+    font-size: 36px;
     font-style: italic;
     text-shadow: 0 0 5px white, 0 0 5px whitesmoke;
     display: block;
     margin-right: auto;
     margin-left: auto;
     text-align: center;
-  }
+ }
+
+ h2 {
+     color: black;
+     font: Arial;
+     font-size: 64px;
+ }
+
+.container {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  margin-top: 3rem;
+}
