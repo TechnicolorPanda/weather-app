@@ -1,11 +1,11 @@
 body {
     font-family: Georgia, "Nimbus Roman No9 L", "Century Schoolbook L", serif;
     font-size: 20px;
-    background-color: rgb(89, 173, 206);
+    background-color: rgb(20, 98, 224);
   }
 
 h1 {
-    color: rgb(26, 57, 145);
+    color: black;
     font-size: 36px;
     font-style: italic;
     text-shadow: 0 0 5px white, 0 0 5px whitesmoke;
@@ -22,9 +22,22 @@ h1 {
  }
 
 .container {
+  background-color: rgba(20, 78, 218, 0.568);
   display: block;
   margin-right: auto;
   margin-left: auto;
   text-align: center;
   margin-top: 3rem;
+  padding: 1rem;
+  width: 60%;
+  border-radius: 10%;
+}
+
+img {
+    display: inline-block;
+    font-family: 'weathericons';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
 }
