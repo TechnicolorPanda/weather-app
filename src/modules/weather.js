@@ -3,6 +3,7 @@
 function loadWeather() {
   console.log('load weather');
   const city = 'Houghton';
+  selectSubmit();
   getWeather(city);
 }
 
@@ -51,7 +52,6 @@ class Weather {
 }
 
 function gatherData(weatherInformation) {
-  console.log('gather data');
   const city = weatherInformation.name;
   const temperature = weatherInformation.main.temp;
   const feelsLike = weatherInformation.main.feels_like;
@@ -78,15 +78,12 @@ function gatherData(weatherInformation) {
     // windDirection,
     // windSpeed,
   );
-  // console.log(`wind ${windDirection}`);
-  console.log(weatherData);
   displayWeather(weatherData);
 }
 
 function displayWeather(weatherData) {
   console.log('display weather');
   displayCity(weatherData);
-  selectSubmit();
   displayTemperature(weatherData);
   displayFeelsLike(weatherData);
   displayTempMax(weatherData);
@@ -116,6 +113,7 @@ function resetPage() {
 function selectSubmit() {
   const submitButton = document.getElementById('submit');
   submitButton.addEventListener('click', () => {
+    console.log('click');
     changeCity();
   });
 }
