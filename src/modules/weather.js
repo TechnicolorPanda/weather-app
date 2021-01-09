@@ -2,7 +2,7 @@
 
 function loadWeather() {
   console.log('load weather');
-  const city = 'Grand Rapids';
+  const city = 'Houghton';
   getWeather(city);
 }
 
@@ -86,7 +86,7 @@ function gatherData(weatherInformation) {
 function displayWeather(weatherData) {
   console.log('display weather');
   displayCity(weatherData);
-  changeCity();
+  selectSubmit();
   displayTemperature(weatherData);
   displayFeelsLike(weatherData);
   displayTempMax(weatherData);
@@ -98,18 +98,30 @@ function displayWeather(weatherData) {
 }
 
 function displayCity(weatherData) {
-  const displayBox = document.getElementById('content');
-  const cityName = document.createElement('h1');
+  const cityName = document.getElementById('cityName');
   cityName.innerHTML = weatherData.city;
-  displayBox.appendChild(cityName);
 }
 
 function changeCity() {
-// TO: add input section to change city, add validation
+  const city = document.getElementById('search').value;
+  resetPage();
+  getWeather(city);
+}
+
+function resetPage() {
+  const displayBox = document.getElementById('info');
+  displayBox.innerHTML = '';
+}
+
+function selectSubmit() {
+  const submitButton = document.getElementById('submit');
+  submitButton.addEventListener('click', () => {
+    changeCity();
+  });
 }
 
 function displayTemperature(weatherData) {
-  const displayBox = document.getElementById('content');
+  const displayBox = document.getElementById('info');
   const displayTemp = document.createElement('h2');
   const tempInK = weatherData.temperature;
   const currentTemperature = temperatureInF(tempInK);
@@ -118,7 +130,7 @@ function displayTemperature(weatherData) {
 }
 
 function displayFeelsLike(weatherData) {
-  const displayBox = document.getElementById('content');
+  const displayBox = document.getElementById('info');
   const displayFeels = document.createElement('h3');
   const tempInK = weatherData.feelsLike;
   const feelsLikeTemperature = temperatureInF(tempInK);
@@ -127,7 +139,7 @@ function displayFeelsLike(weatherData) {
 }
 
 function displayTempMax(weatherData) {
-  const displayBox = document.getElementById('content');
+  const displayBox = document.getElementById('info');
   const displayMax = document.createElement('h3');
   const tempInK = weatherData.tempMax;
   const maxTemp = temperatureInF(tempInK);
@@ -136,7 +148,7 @@ function displayTempMax(weatherData) {
 }
 
 function displayTempMin(weatherData) {
-  const displayBox = document.getElementById('content');
+  const displayBox = document.getElementById('info');
   const displayMin = document.createElement('h3');
   const tempInK = weatherData.tempMin;
   const minTemp = temperatureInF(tempInK);
@@ -145,7 +157,7 @@ function displayTempMin(weatherData) {
 }
 
 function displayHumidity(weatherData) {
-  const displayBox = document.getElementById('content');
+  const displayBox = document.getElementById('info');
   const displayHumid = document.createElement('h3');
   const humidity = weatherData.humidityPercent;
   displayHumid.innerHTML = `Humidity ${humidity}%`;
@@ -153,7 +165,7 @@ function displayHumidity(weatherData) {
 }
 
 function displayReport(weatherData) {
-  const displayBox = document.getElementById('content');
+  const displayBox = document.getElementById('info');
   const displayDescription = document.createElement('h3');
   const reportInfo = weatherData.report;
   displayDescription.innerHTML = `${reportInfo}`;
@@ -161,7 +173,7 @@ function displayReport(weatherData) {
 }
 
 function displayCategory(weatherData) {
-  const displayBox = document.getElementById('content');
+  const displayBox = document.getElementById('info');
   const writeCategory = document.createElement('h3');
   const categoryInfo = weatherData.category;
   writeCategory.innerHTML = `${categoryInfo}`;
