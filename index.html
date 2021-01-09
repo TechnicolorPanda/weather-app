@@ -9,10 +9,19 @@
 <link rel='stylesheet' href='style.css' />
 
 <body>
-    <div id = content class = 'container'>
+    <div id = 'content' class = 'container'>
       <img src='#' />
+      <h1 id = 'cityName'></h1>
+      <div class = 'container' id = 'searchBar'>
+        <label for='search'></label>
+        <input type='text' id='search' name='search' onfocus = '' value = 'Find city by name or zip code'></input>
+        <button type='button' id='submit'>Submit</button>
+      </div>
+      <div id = 'info' class = 'container'>
+      </div>
     </div>  
-  <script type = 'text/javascript' src = 'main.js'>
+
+    <script type = 'text/javascript' src = 'main.js'>
   </script>
 </body>
 </html>
