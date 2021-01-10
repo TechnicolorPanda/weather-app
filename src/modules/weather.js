@@ -2,7 +2,7 @@
 
 function loadWeather() {
   console.log('load weather');
-  const city = 'Houghton';
+  const city = 'Grand Rapids';
   selectSubmit();
   getWeather(city);
 }
@@ -15,6 +15,7 @@ async function getWeather(city) {
       mode: 'cors',
     });
     const weatherInformation = await response.json();
+    console.log(weatherInformation);
     gatherData(weatherInformation);
   } catch (err) {
     errorResult();
@@ -32,10 +33,8 @@ class Weather {
     tempMin,
     humidityPercent,
     report,
-    category,
+    // category,
     iconInfo,
-    windDirection,
-    windSpeed,
   ) {
     this.city = city;
     this.temperature = temperature;
@@ -44,10 +43,8 @@ class Weather {
     this.tempMin = tempMin;
     this.humidityPercent = humidityPercent;
     this.report = report;
-    this.category = category;
+    // this.category = category;
     this.iconInfo = iconInfo;
-    this.windDirection = windDirection;
-    this.windSpeed = windSpeed;
   }
 }
 
@@ -59,11 +56,8 @@ function gatherData(weatherInformation) {
   const tempMin = weatherInformation.main.temp_min;
   const humidityPercent = weatherInformation.main.humidity;
   const report = weatherInformation.weather[0].description;
-  const category = weatherInformation.weather[0].main;
+  // const category = weatherInformation.weather[0].main;
   const iconInfo = weatherInformation.weather[0].icon;
-
-  // const windDirection = weatherInformation.wind[deg];
-  // const windSpeed = weatherInformation.wind.speed;
 
   const weatherData = new Weather(
     city,
@@ -73,10 +67,8 @@ function gatherData(weatherInformation) {
     tempMin,
     humidityPercent,
     report,
-    category,
+    // category,
     iconInfo,
-    // windDirection,
-    // windSpeed,
   );
   displayWeather(weatherData);
 }
@@ -90,7 +82,7 @@ function displayWeather(weatherData) {
   displayTempMin(weatherData);
   displayHumidity(weatherData);
   displayReport(weatherData);
-  displayCategory(weatherData);
+  // displayCategory(weatherData);
   displayIcon(weatherData);
 }
 
@@ -138,19 +130,22 @@ function displayFeelsLike(weatherData) {
 
 function displayTempMax(weatherData) {
   const displayBox = document.getElementById('info');
+  const displayTemps = document.createElement('container');
+  displayTemps.setAttribute('id', 'temp_box');
   const displayMax = document.createElement('h3');
   const tempInK = weatherData.tempMax;
   const maxTemp = temperatureInF(tempInK);
-  displayMax.innerHTML = `High ${maxTemp}\u{00B0}F`;
-  displayBox.appendChild(displayMax);
+  displayMax.innerHTML = `High ${maxTemp}\u{00B0}F | `;
+  displayTemps.appendChild(displayMax);
+  displayBox.appendChild(displayTemps);
 }
 
 function displayTempMin(weatherData) {
-  const displayBox = document.getElementById('info');
+  const displayBox = document.getElementById('temp_box');
   const displayMin = document.createElement('h3');
   const tempInK = weatherData.tempMin;
   const minTemp = temperatureInF(tempInK);
-  displayMin.innerHTML = `Low ${minTemp}\u{00B0}F`;
+  displayMin.innerHTML = ` Low ${minTemp}\u{00B0}F`;
   displayBox.appendChild(displayMin);
 }
 
@@ -170,26 +165,94 @@ function displayReport(weatherData) {
   displayBox.appendChild(displayDescription);
 }
 
-function displayCategory(weatherData) {
-  const displayBox = document.getElementById('info');
-  const writeCategory = document.createElement('h3');
-  const categoryInfo = weatherData.category;
-  writeCategory.innerHTML = `${categoryInfo}`;
-  displayBox.appendChild(writeCategory);
+// function displayCategory(weatherData) {
+//   const categoryInfo = weatherData.category;
+//   console.log(categoryInfo);
+//   if (categoryInfo === 'Clouds') {
+//     console.log('clouds');
+//     const style = document.createElement('style');
+//     style.innerHTML = `
+//           body{
+//               background-image: url('images/cloudy.jpg');
+//               background-repeat: no-repeat;
+//               background-attachment: fixed;
+//               background-size: cover;
+//           }`;
+//     document.head.appendChild(style);
+//   } else if (categoryInfo === 'Clear') {
+//     const style = document.createElement('style');
+//     style.innerHTML = `
+//           body{
+//               background-image: url('images/clear.jpg');
+//               background-repeat: no-repeat;
+//               background-attachment: fixed;
+//               background-size: cover;
+//           }`;
+//     document.head.appendChild(style);
+//   }
+// }
+
+function setBackground(iconNumber) {
+  const style = document.createElement('style');
+  style.backgroundRepeat = 'no-repeat';
+  style.backgroundAttachment = 'fixed';
+  style.backgroundSize = 'cover';
+  console.log(iconNumber);
+  if ((iconNumber === '04n') || (iconNumber === '04d') || (iconNumber === '03n') || (iconNumber === '03d')) {
+    style.innerHTML = `
+          body{
+              background-image: url('images/cloudy.jpg');
+          }`;
+    document.head.appendChild(style);
+  } else if ((iconNumber === '01d') || (iconNumber === '01n')) {
+    style.innerHTML = `
+          body{
+              background-image: url('images/clear.jpeg');
+          }`;
+    document.head.appendChild(style);
+  } else if ((iconNumber === '02d') || (iconNumber === '02n')) {
+    style.innerHTML = `
+    body{
+        background-image: url('images/partlycloudy.jpeg');
+    }`;
+    document.head.appendChild(style);
+  } else if ((iconNumber === '09n') || (iconNumber === '09d') || (iconNumber === '10n') || (iconNumber === '10d')) {
+    style.innerHTML = `
+    body{
+        background-image: url('images/rainy.jpeg');
+    }`;
+    document.head.appendChild(style);
+  } else if ((iconNumber === '11n') || (iconNumber === '11d')) {
+    style.innerHTML = `
+    body{
+        background-image: url('images/thunderstorm.jpg');
+    }`;
+    document.head.appendChild(style);
+  } else if ((iconNumber === '13n') || (iconNumber === '13d')) {
+    style.innerHTML = `
+    body{
+        background-image: url('images/snow.jpg');
+    }`;
+    document.head.appendChild(style);
+  } else if ((iconNumber === '50n') || (iconNumber === '50d')) {
+    style.innerHTML = `
+    body{
+        background-image: url('images/mist.jpg');
+    }`;
+    document.head.appendChild(style);
+  }
 }
 
-// TODO: fix icon displaying on page
-
 async function displayIcon(weatherData) {
+  console.log('display icon');
   const img = document.querySelector('img');
   const iconNumber = weatherData.iconInfo;
+  setBackground(iconNumber);
   try {
-    const response = await fetch(`https://openweathermap.org/img/wn/${iconNumber}@2x.png`, {
+    const iconData = await fetch(`https://openweathermap.org/img/wn/${iconNumber}@2x.png`, {
       mode: 'cors',
     });
-    console.log(response);
-    const iconData = await response.json();
-    img.src = iconData.data.images.original.url;
+    img.src = iconData.url;
   } catch (err) {
     errorResult();
   }

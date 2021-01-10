@@ -10,15 +10,20 @@
 
 <body>
     <div id = 'content' class = 'container'>
-      <img src='#' />
       <h1 id = 'cityName'></h1>
       <div class = 'container' id = 'searchBar'>
         <label for='search'></label>
-        <input type='text' id='search' name='search' value = 'Find city by name or zip code' onfocus = "this.value=''"></input>
+        <input type='text' id='search' name='search' value = 'Find city by name' onfocus = "this.value=''"></input>
         <button type='button' id='submit'>Submit</button>
       </div>
+      <img src='#' />
       <div id = 'info' class = 'container'>
       </div>
+      <label class="switch">
+        <p>F     C</p>
+        <input type="checkbox">
+        <span class="slider round"></span>
+      </label>
     </div>  
 
     <script type = 'text/javascript' src = 'main.js'>
