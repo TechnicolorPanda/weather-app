@@ -1,5 +1,5 @@
 import { errorResult } from './weather';
-import { temperatureInF } from './temperature';
+import { changeTempUnits, temperatureInF } from './temperature';
 
 // displays city name on page
 
@@ -163,7 +163,7 @@ async function displayIcon(weatherData) {
 
 // renders the display of the retrieved information
 
-function displayWeather(weatherData) {
+function displayWeather(weatherData, units) {
   displayCity(weatherData);
   displayTemperature(weatherData);
   displayFeelsLike(weatherData);
@@ -172,7 +172,7 @@ function displayWeather(weatherData) {
   displayHumidity(weatherData);
   displayReport(weatherData);
   displayIcon(weatherData);
-  changeTempUnits();
+  changeTempUnits(weatherData, units);
 }
 
 export { displayWeather };

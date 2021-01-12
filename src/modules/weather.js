@@ -9,7 +9,8 @@ async function getWeather(city) {
       mode: 'cors',
     });
     const weatherInformation = await response.json();
-    gatherData(weatherInformation);
+    let units = true;
+    gatherData(weatherInformation, units);
   } catch (err) {
     errorResult();
   }
@@ -61,6 +62,7 @@ function gatherData(weatherInformation, units) {
     report,
     iconInfo,
   );
+  console.log('gather data');
   displayWeather(weatherData, units);
 }
 
@@ -97,11 +99,11 @@ function selectSubmit() {
 // initial loading of data
 
 function loadWeather() {
+  console.log('load weather');
   const city = 'Grand Rapids';
   const units = true;
   selectSubmit();
   getWeather(city);
-  changeTempUnits(units);
 }
 
 export { loadWeather, gatherData, errorResult };

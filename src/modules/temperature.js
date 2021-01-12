@@ -18,11 +18,17 @@ function temperatureInC(tempInK) {
 // TODO: enable access to change of units upon selection
 
 function changeTempUnits(weatherData, units) {
+  console.log(units);
   const tempToggle = document.getElementById('toggle');
   tempToggle.addEventListener('click', () => {
-    units = !units;
-    gatherData(weatherData, units);
+    changeUnits(weatherData, units);
   });
+}
+
+function changeUnits(weatherData, units) {
+  units = !units;
+  console.log(units);
+  gatherData(weatherData, units);
 }
 
 export { temperatureInF, changeTempUnits };
