@@ -1,4 +1,6 @@
-import { gatherData } from './weather';
+/* eslint-disable import/no-cycle */
+import { displayWeather } from './home';
+import { resetPage } from './weather';
 
 // converts temperature from Kelvin to Farenheit
 
@@ -14,21 +16,19 @@ function temperatureInC(tempInK) {
   return Math.round(tempInC);
 }
 
-// changes units upon toggle
-// TODO: enable access to change of units upon selection
+function changeUnits(weatherData) {
+  const units = document.getElementById('check').checked;
+  resetPage();
+  displayWeather(weatherData, units);
+}
 
-function changeTempUnits(weatherData, units) {
-  console.log(units);
+// changes units upon toggle
+
+function changeTempUnits(weatherData) {
   const tempToggle = document.getElementById('toggle');
   tempToggle.addEventListener('click', () => {
-    changeUnits(weatherData, units);
+    changeUnits(weatherData);
   });
 }
 
-function changeUnits(weatherData, units) {
-  units = !units;
-  console.log(units);
-  gatherData(weatherData, units);
-}
-
-export { temperatureInF, changeTempUnits };
+export { temperatureInF, temperatureInC, changeTempUnits };

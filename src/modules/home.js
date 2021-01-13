@@ -1,5 +1,6 @@
+/* eslint-disable import/no-cycle */
 import { errorResult } from './weather';
-import { changeTempUnits, temperatureInF } from './temperature';
+import { temperatureInF, temperatureInC } from './temperature';
 
 // displays city name on page
 
@@ -10,48 +11,74 @@ function displayCity(weatherData) {
 
 // converts temperature from Kelvin to Farenheit
 
-function displayTemperature(weatherData) {
+function displayTemperature(weatherData, units) {
   const displayBox = document.getElementById('info');
   const displayTemp = document.createElement('h2');
   const tempInK = weatherData.temperature;
-  const currentTemperature = temperatureInF(tempInK);
-  displayTemp.innerHTML = `${currentTemperature}\u{00B0}F`;
+
+  if (units === true) {
+    const currentTemperature = temperatureInC(tempInK);
+    displayTemp.innerHTML = `${currentTemperature}\u{00B0}C`;
+  } else {
+    const currentTemperature = temperatureInF(tempInK);
+    displayTemp.innerHTML = `${currentTemperature}\u{00B0}F`;
+  }
+
   displayBox.appendChild(displayTemp);
 }
 
 // displays temperature of feels like
 
-function displayFeelsLike(weatherData) {
+function displayFeelsLike(weatherData, units) {
   const displayBox = document.getElementById('info');
   const displayFeels = document.createElement('h3');
   const tempInK = weatherData.feelsLike;
-  const feelsLikeTemperature = temperatureInF(tempInK);
-  displayFeels.innerHTML = `Feels like ${feelsLikeTemperature}\u{00B0}F`;
+
+  if (units === true) {
+    const feelsLikeTemperature = temperatureInC(tempInK);
+    displayFeels.innerHTML = `Feels like ${feelsLikeTemperature}\u{00B0}C`;
+  } else {
+    const feelsLikeTemperature = temperatureInF(tempInK);
+    displayFeels.innerHTML = `Feels like ${feelsLikeTemperature}\u{00B0}F`;
+  }
+
   displayBox.appendChild(displayFeels);
 }
 
 // displays the maximum temperature
 
-function displayTempMax(weatherData) {
+function displayTempMax(weatherData, units) {
   const displayBox = document.getElementById('info');
   const displayTemps = document.createElement('container');
   displayTemps.setAttribute('id', 'temp_box');
   const displayMax = document.createElement('h3');
   const tempInK = weatherData.tempMax;
-  const maxTemp = temperatureInF(tempInK);
-  displayMax.innerHTML = `High ${maxTemp}\u{00B0}F | `;
+  if (units === true) {
+    const maxTemp = temperatureInC(tempInK);
+    displayMax.innerHTML = `High ${maxTemp}\u{00B0}C | `;
+  } else {
+    const maxTemp = temperatureInF(tempInK);
+    displayMax.innerHTML = `High ${maxTemp}\u{00B0}F | `;
+  }
+
   displayTemps.appendChild(displayMax);
   displayBox.appendChild(displayTemps);
 }
 
 // displays the minimum temperature
 
-function displayTempMin(weatherData) {
+function displayTempMin(weatherData, units) {
   const displayBox = document.getElementById('temp_box');
   const displayMin = document.createElement('h3');
   const tempInK = weatherData.tempMin;
-  const minTemp = temperatureInF(tempInK);
-  displayMin.innerHTML = ` Low ${minTemp}\u{00B0}F`;
+  if (units === true) {
+    const minTemp = temperatureInC(tempInK);
+    displayMin.innerHTML = ` Low ${minTemp}\u{00B0}C`;
+  } else {
+    const minTemp = temperatureInF(tempInK);
+    displayMin.innerHTML = ` Low ${minTemp}\u{00B0}F`;
+  }
+
   displayBox.appendChild(displayMin);
 }
 
@@ -165,14 +192,13 @@ async function displayIcon(weatherData) {
 
 function displayWeather(weatherData, units) {
   displayCity(weatherData);
-  displayTemperature(weatherData);
-  displayFeelsLike(weatherData);
-  displayTempMax(weatherData);
-  displayTempMin(weatherData);
+  displayTemperature(weatherData, units);
+  displayFeelsLike(weatherData, units);
+  displayTempMax(weatherData, units);
+  displayTempMin(weatherData, units);
   displayHumidity(weatherData);
   displayReport(weatherData);
   displayIcon(weatherData);
-  changeTempUnits(weatherData, units);
 }
 
 export { displayWeather };

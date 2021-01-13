@@ -1,20 +1,6 @@
+/* eslint-disable import/no-cycle */
 import { displayWeather } from './home';
 import { changeTempUnits } from './temperature';
-
-// retrieve weather data from openweather.com
-
-async function getWeather(city) {
-  try {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=5287f004be1ee460907a8a4c96152f64`, {
-      mode: 'cors',
-    });
-    const weatherInformation = await response.json();
-    let units = true;
-    gatherData(weatherInformation, units);
-  } catch (err) {
-    errorResult();
-  }
-}
 
 // creates a class for weather information used
 
@@ -42,7 +28,9 @@ class Weather {
 
 // place weather information for selected city within the Weather class
 
-function gatherData(weatherInformation, units) {
+function gatherData(weatherInformation) {
+  // sorts weather information into used categories
+
   const city = weatherInformation.name;
   const temperature = weatherInformation.main.temp;
   const feelsLike = weatherInformation.main.feels_like;
@@ -62,7 +50,11 @@ function gatherData(weatherInformation, units) {
     report,
     iconInfo,
   );
-  console.log('gather data');
+  changeTempUnits(weatherData);
+
+  // identifies units selected on toggle and displays by units
+
+  const units = document.getElementById('check').checked;
   displayWeather(weatherData, units);
 }
 
@@ -70,14 +62,6 @@ function gatherData(weatherInformation, units) {
 
 function errorResult() {
   console.log('error in retrieving weather');
-}
-
-// changes city for which to retrieve weather information
-
-function changeCity() {
-  const city = document.getElementById('search').value;
-  resetPage();
-  getWeather(city);
 }
 
 // clears page to enable rendering of new data
@@ -96,14 +80,34 @@ function selectSubmit() {
   });
 }
 
+// retrieve weather data from openweather.com
+
+async function getWeather(city) {
+  try {
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=5287f004be1ee460907a8a4c96152f64`, {
+      mode: 'cors',
+    });
+    const weatherInformation = await response.json();
+    gatherData(weatherInformation);
+  } catch (err) {
+    errorResult();
+  }
+}
+
+// changes city for which to retrieve weather information
+
+function changeCity() {
+  const city = document.getElementById('search').value;
+  resetPage();
+  getWeather(city);
+}
+
 // initial loading of data
 
 function loadWeather() {
-  console.log('load weather');
   const city = 'Grand Rapids';
-  const units = true;
   selectSubmit();
   getWeather(city);
 }
 
-export { loadWeather, gatherData, errorResult };
+export { loadWeather, errorResult, resetPage };
