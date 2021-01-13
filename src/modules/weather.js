@@ -61,7 +61,10 @@ function gatherData(weatherInformation) {
 // handles errors in retrieving weather data
 
 function errorResult() {
-  console.log('error in retrieving weather');
+  const displayBox = document.getElementById('info');
+  const displayError = document.createElement('h4');
+  displayError.innerHTML = 'Weather data is unable to be displayed. Please try again.';
+  displayBox.appendChild(displayError);
 }
 
 // clears page to enable rendering of new data
@@ -71,20 +74,11 @@ function resetPage() {
   displayBox.innerHTML = '';
 }
 
-// submits new city name
-
-function selectSubmit() {
-  const submitButton = document.getElementById('submit');
-  submitButton.addEventListener('click', () => {
-    changeCity();
-  });
-}
-
 // retrieve weather data from openweather.com
 
 async function getWeather(city) {
   try {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=5287f004be1ee460907a8a4c96152f64`, {
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},&APPID=5287f004be1ee460907a8a4c96152f64`, {
       mode: 'cors',
     });
     const weatherInformation = await response.json();
@@ -94,12 +88,55 @@ async function getWeather(city) {
   }
 }
 
+// error directs user to input valid city name
+
+function submitError() {
+  resetPage();
+  const displayBox = document.getElementById('info');
+  const displayError = document.createElement('h4');
+  displayError.innerHTML = 'Please enter a valid city name. Do not enter state, country, or zip code.';
+  displayBox.appendChild(displayError);
+}
+
 // changes city for which to retrieve weather information
 
 function changeCity() {
   const city = document.getElementById('search').value;
   resetPage();
   getWeather(city);
+}
+
+// displays error upon failing test for correct input of city name
+
+function cityError(cityTest) {
+  if (cityTest) {
+    changeCity();
+  } else {
+    submitError();
+  }
+}
+
+// validates correct city name input
+
+function validateCity() {
+  const cityInput = document.getElementById('search').value;
+  if (cityInput.length >= 2 && cityInput.length <= 74) {
+    const validCity = (/^[a-zA-Z.&' _`-]*$/);
+    const cityTest = validCity.test(cityInput);
+    cityError(cityTest);
+  } else {
+    submitError();
+  }
+}
+
+// submits new city name
+
+function selectSubmit() {
+  const submitButton = document.getElementById('submit');
+  submitButton.addEventListener('click', () => {
+    const submit = true;
+    validateCity(submit);
+  });
 }
 
 // initial loading of data

@@ -31,6 +31,11 @@ h1 {
      margin-left: 5px;
  }
 
+ h4 {
+   font-size: 32px;
+   padding: 1rem;
+ }
+
 #content {
   background-color: rgba(94, 129, 209, 0.568);
   display: block;
